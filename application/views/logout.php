@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>Login - Pigeonhole</title>
+	<title>Logout - Pigeonhole</title>
 
 	<style type="text/css">
 

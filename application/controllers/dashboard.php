@@ -31,13 +31,15 @@ class Dashboard extends CI_Controller {
 		//$this->load->view('dashboard'); //this was causing a bug with showing template TWICE
 		$this->load->library('session');
 		$this->load->library('parser');
+		$this->load->library('pagination');
 		$this->load->database();
 		
-
+		date_default_timezone_set('America/New_York');
 		//session held data would go here!
 		$data = array(
 			'user' => $_SESSION['firstName'],
-			'employeeId' => $_SESSION['employeeId']
+			'employeeId' => $_SESSION['employeeId'],
+			'datetime' => unix_to_human(time(), TRUE, 'us')
 		);
 
 		$this->parser->parse('dashboard', $data);

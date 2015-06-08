@@ -221,7 +221,7 @@
 		</div>
 		<div id="user-data">
 			<h2>Welcome, {user} <a href='profile/{employeeId}'><span class='edit_profile'>Edit Profile</span></a></h2>
-			<h4><?php echo unix_to_human(time(), TRUE, 'us'); ?></h4>
+			<h4>{datetime}</h4>
 			<a href='logout'><h4 class='logout'>Logout</h4></a>
 		</div>
 	</header>
