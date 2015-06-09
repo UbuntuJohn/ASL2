@@ -92,7 +92,7 @@
 	}
 
 	form {
-		margin-top: 100px;
+		margin-top: 70px;
 		margin-left: 100px;
 	}
 

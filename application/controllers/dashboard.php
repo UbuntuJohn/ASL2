@@ -31,21 +31,39 @@ class Dashboard extends CI_Controller {
 		//$this->load->view('dashboard'); //this was causing a bug with showing template TWICE
 		$this->load->library('session');
 		$this->load->library('parser');
-		$this->load->library('pagination');
 		$this->load->database();
 		
 		date_default_timezone_set('America/New_York');
-		//session held data would go here!
-		$data = array(
-			'user' => $_SESSION['firstName'],
-			'employeeId' => $_SESSION['employeeId'],
-			'datetime' => unix_to_human(time(), TRUE, 'us')
-		);
+
+
+		$query = $this->db->query("select * from team join employee on employee.employeeId = team.managerId where managerId='{$_SESSION['employeeId']}'");
+
+		if($query->num_rows() > 0) {
+
+			$data = array(
+				'user' => $_SESSION['firstName'],
+				'employeeId' => $_SESSION['employeeId'],
+				'datetime' => unix_to_human(time(), TRUE, 'us'),
+				'memberId' => $query->result_array(),
+				'firstName' => $query->result_array(),
+				'lastName' => $query->result_array(),
+			);
+				
+		} else {
+			
+			$data = array(
+				'user' => $_SESSION['firstName'],
+				'employeeId' => $_SESSION['employeeId'],
+				'datetime' => unix_to_human(time(), TRUE, 'us')
+			);
+
+			
+		}
 
 		$this->parser->parse('dashboard', $data);
 
-
-
+			
+			
 	}
 
 	public function login() {
@@ -69,6 +87,23 @@ class Dashboard extends CI_Controller {
 		//destroy the session
 		session_destroy();
 	}
+
+	public function profile() {
+
+	}
+
+	public function termed() {
+		
+	}
+
+	public function settings() {
+		
+	}
+
+	public function uploads() {
+		
+	}
+
 }
 
 /* End of file welcome.php */

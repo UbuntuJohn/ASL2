@@ -248,7 +248,14 @@
 		</tr>
 	</thead>
 	<tbody>
-		
+		<tr>
+			<td>{lastName} {firstName}</td>
+			<td>{memberId}</td>
+			<td>{attendance}</td>
+			<td>{surveyScores}</td>
+			<td>{salesScores}</td>
+			<td><img src='../../assets/images/gears.png' /></td>
+		</tr>
 	</tbody>
 </table>
 </div>
