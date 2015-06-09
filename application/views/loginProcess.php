@@ -130,6 +130,10 @@
 		font-family: "lev";
 		font-size: 16px;
 		color: #fff;
+		margin-top: 100px;
+		background-color: #38292a;
+		padding: 8px;
+		border: 2px solid #c1c1c1;
 	}
 
 	p a {
@@ -156,25 +160,20 @@
 
 <div class="container">
 	<header>
-		<img src='../../assets/images/login.png' />
+		<img src='../../assets/images/process.png' />
 	</header>
 	<section>
-		
-		<?php echo form_open('login/process'); ?>
-		<br />
-		<strong>E-Mail Address:</strong><br />
-		<?php echo form_input('email', ''); ?><br /><br />
-		<strong>Password:</strong><br />
-		<?php echo form_password('password', ''); ?><br /><br />
-		<?php echo form_submit('login', 'Login'); ?>
-		<?php echo form_close(); ?><br />
-		<br />
-		<p>Register <span class='free'>FREE</span> as <a href='../register/manager'>Manager</a> or <a href='../register/member'>Member</a></p>
-
+		<p>Password was wrong or invalid account!<br />
+		<a href='../register/manager'>Create Account</a> or <a href='../login/newpassword'>Set new password</a></p>
 
 
 	</section>
 </div>
-
+<script src="../../assets/js/jquery.js"></script>
+<script>
+$(function() {
+	alert('Page is working!');
+});
+</script>
 </body>
 </html>

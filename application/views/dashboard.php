@@ -210,6 +210,13 @@
 	td img {
 		width: 40px;
 	}
+
+	.add {
+		float: right;
+		margin-right: 1110px;
+		margin-top: -7px;
+		width: 30px;
+	}
 	</style>
 </head>
 <body>
@@ -235,7 +242,8 @@
 		</ul>
 	</nav>
 <div class="container">
-<h3 class='label'>Your Team</h3>
+
+<h3 class='label'>Your Team <img src='../../assets/images/add.png' class='add' /></h3>
 <table>
 	<thead>
 		<tr>

@@ -6,6 +6,12 @@ class Register extends CI_Controller {
 	public function manager() {
 		$this->load->helper('form');
 		$this->load->view('register');
+		$this->load->helper('url');
+		$this->load->library('form_validation');
+		$this->form_validation->set_rules('password', 'Password', 'required|trim');
+		$this->form_validation->set_rules('password2', 'Password Confirmation', 'required|trim');
+		$this->form_validation->set_rules('email', 'Email', 'required|trim'); 
+		$this->form_validation->run();
 	}
 
 	public function process() {

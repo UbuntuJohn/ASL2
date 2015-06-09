@@ -48,7 +48,7 @@ class Login extends CI_Controller {
 					
 
 				} else {
-					echo "Password incorrect or account does not exist";
+					$this->load->view('loginProcess');
 				}
 
 				

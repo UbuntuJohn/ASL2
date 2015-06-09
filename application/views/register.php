@@ -147,6 +147,8 @@
 		<img src='../../assets/images/login.png' />
 	</header>
 	<section>
+		
+
 		<?php echo form_open('register/process'); ?>
 		<br />
 		<strong>E-Mail Address:</strong><br />
