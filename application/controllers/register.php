@@ -2,7 +2,7 @@
 
 class Register extends CI_Controller {
 
-
+	//manager method showing form, template, URL, formvalidation library, and rules
 	public function manager() {
 		$this->load->helper('form');
 		$this->load->view('register');
@@ -14,21 +14,24 @@ class Register extends CI_Controller {
 		$this->form_validation->run();
 	}
 
+	//process method running database, email library, and registerProcess template
 	public function process() {
 		$this->load->database();
 		$this->load->library('email');
 		$this->load->view('registerProcess');
 
+		//email configuration
 		$this->email->initialize(array(
 	     'mailtype' => 'html',
 	     'validate' => TRUE,
 	     'protocol' => 'mail'
     	));
 
+		//check to see if POST data is set
 		if(isset($_POST['email']) && isset($_POST['password']) && isset($_POST['password2']) && isset($_POST['firstName']) && isset($_POST['lastName'])) {
-			
+			//check to see if POST data is not empty
 			if(!empty($_POST['email']) && !empty($_POST['password']) && !empty($_POST['password2']) && !empty($_POST['firstName']) && !empty($_POST['lastName'])) {
-
+				//if password is equal to the second password form, set up variables
 				if($_POST['password'] == $_POST['password2']) {
 					$email = $_POST['email'];
 					$password = $_POST['password'];
@@ -36,10 +39,13 @@ class Register extends CI_Controller {
 					$hashed = crypt($password, $salt);
 					$firstName = $_POST['firstName'];
 					$lastName = $_POST['lastName'];
+					//creates a unique ID
 					$code = uniqid();
 
+					//insert data into database
 					$query = $this->db->query("insert into employee (email, password, manager, firstName, lastName, activationCode, activatedId) values ('$email', '$hashed', '1', '$firstName', '$lastName', '$code', '1')");
 					
+					//if successful, send email (isn't working for some reason)
 					if($query) {
 
 						$this->email->from('w3philly@gmail.com', 'PigeonHole');
@@ -49,6 +55,7 @@ class Register extends CI_Controller {
 						if($this->email->send()) {
 							echo "<p>Registered Successfully! Please visit your email to activate your account.</p>";
 						} else {
+							//if didn't work, show debugger info
 							echo $this->email->print_debugger();
 						}
 						
