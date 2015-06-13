@@ -160,12 +160,13 @@
 
 <div class="container">
 	<header>
-		<img src='../../assets/images/process.png' />
+		<img src='../../assets/images/register.png' />
 	</header>
 	<section>
-		<p>Password was wrong or invalid account!<br />
-		<a href='../register/manager'>Create Account</a> or <a href='../login/newpassword'>Set new password</a></p>
-
+		
+		<p>
+			<a href='../dashboard/login'>Login</a>
+		</p>
 
 	</section>
 </div>

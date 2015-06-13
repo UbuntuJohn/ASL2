@@ -17,6 +17,7 @@ class Register extends CI_Controller {
 	public function process() {
 		$this->load->database();
 		$this->load->library('email');
+		$this->load->view('registerProcess');
 
 		$this->email->initialize(array(
 	     'mailtype' => 'html',

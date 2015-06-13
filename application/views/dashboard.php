@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<title>Dashboard - Pigeonhole</title>
-
+	<link rel="stylesheet" type="text/css" href="../../assets/js/popup/dist/magnific-popup.css" />
 	<style type="text/css">
 
 	::selection{ background-color: #E13300; color: white; }
@@ -243,7 +243,7 @@
 	</nav>
 <div class="container">
 
-<h3 class='label'>Your Team <img src='../../assets/images/add.png' class='add' /></h3>
+<h3 class='label'>Your Team <img src='../../assets/images/add.png' href='#new_member' class='add' /></h3>
 <table>
 	<thead>
 		<tr>
@@ -266,7 +266,25 @@
 		</tr>
 	</tbody>
 </table>
+<div id="new_member" class="white-popup-block mfp-hide">Testing 1, 2 and 3</div>
 </div>
+<script src="../../assets/js/jquery.js"></script>
+<script src="../../assets/js/popup/dist/jquery.magnific-popup.js"></script>
+<script>
+$(function() {
+	$(".add").on("click", function() {
+		
+		$(this).magnificPopup({
+			type: 'inline',
+			preloader: false,
+			focus: '#email',
+			modal: true
+		});
 
+
+
+	});
+});
+</script>
 </body>
 </html>
