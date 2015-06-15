@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<title>Dashboard - Pigeonhole</title>
-	<link rel="stylesheet" type="text/css" href="../../assets/js/popup/dist/magnific-popup.css" />
+	<link rel="stylesheet" type="text/css" href="../../assets/js/jquery-ui/jquery-ui.css" />
 	<style type="text/css">
 
 	::selection{ background-color: #E13300; color: white; }
@@ -217,6 +217,30 @@
 		margin-top: -7px;
 		width: 30px;
 	}
+
+	.success {
+		color: green;
+		background-color: #3BDB46;
+		width: 100%;
+		font-family: "lev";
+		text-align: center;
+		height: 40px;
+		border-bottom: 2px solid green;
+		padding-top: 20px;
+		font-size: 24px;
+		position: absolute;
+		top: 0;
+		left: 0;
+
+	}
+
+	#new_member {
+		display: none;
+	}
+
+	.ui-dialog.success-dialog {
+		font-family: "lev";
+	}
 	</style>
 </head>
 <body>
@@ -227,7 +251,7 @@
 			<img src='../../assets/images/logo.png' />
 		</div>
 		<div id="user-data">
-			<h2>Welcome, {user} <a href='profile/{employeeId}'><span class='edit_profile'>Edit Profile</span></a></h2>
+			<h2>Welcome, {firstName} <a href='profile/{employeeId}'><span class='edit_profile'>Edit Profile</span></a></h2>
 			<h4>{datetime}</h4>
 			<a href='logout'><h4 class='logout'>Logout</h4></a>
 		</div>
@@ -257,33 +281,49 @@
 	</thead>
 	<tbody>
 		<tr>
-			<td>{lastName} {firstName}</td>
+			<td>{lastName}, {firstName}</td>
 			<td>{memberId}</td>
 			<td>{attendance}</td>
 			<td>{surveyScores}</td>
 			<td>{salesScores}</td>
-			<td><img src='../../assets/images/gears.png' /></td>
+			<td><a href='profile/{memberId}'><img src='../../assets/images/gears.png' /></a></td>
 		</tr>
 	</tbody>
 </table>
-<div id="new_member" class="white-popup-block mfp-hide">Testing 1, 2 and 3</div>
+<div id="new_member">
+
+<form action="../teammember/add" method="POST">
+<strong>Employee ID:</strong> <br /><input type="text" name="employeeId" size="10" placeholder="123456789" required /><br /><br />
+<input type="hidden" name="managerId" value="{employeeId}" size="30" required />
+</form>
+
+</div>
 </div>
 <script src="../../assets/js/jquery.js"></script>
-<script src="../../assets/js/popup/dist/jquery.magnific-popup.js"></script>
+<script src="../../assets/js/jquery-ui/jquery-ui.min.js"></script>
 <script>
 $(function() {
 	$(".add").on("click", function() {
 		
-		$(this).magnificPopup({
-			type: 'inline',
-			preloader: false,
-			focus: '#email',
-			modal: true
+		$('#new_member').dialog({
+
+			resizable: false,
+			height: 200,
+			modal: true,
+			buttons: {
+				"Add Member": function() {
+					$(this).dialog().find('form').submit();
+				}
+			},
+			dialogClass: 'no-close success-dialog'
+
 		});
 
 
 
 	});
+
+	$('.success').delay(1000).fadeOut(1000);
 });
 </script>
 </body>

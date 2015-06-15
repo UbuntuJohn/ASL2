@@ -23,11 +23,17 @@ class Dashboard extends CI_Controller {
 	 */
 	public function index()
 	{
+
+
 		//check to see if session isn't set
 		if(!$_SESSION) {
 			//if not, send user to login page (where it is initallized after login)
 			header("Location: login");
 		}
+
+		//if($_SERVER['HTTP_REFERER'] == base_url().)
+
+
 		//load the data helper
 		$this->load->helper('date');
 		//$this->load->view('dashboard'); //this was causing a bug with showing template TWICE
@@ -37,22 +43,49 @@ class Dashboard extends CI_Controller {
 		$this->load->library('parser');
 		//load the database functions
 		$this->load->database();
+
+		$this->load->helper('html');
+		//URL loader
+		$this->load->helper('url');
+		
+		if(isset($_SERVER['HTTP_REFERER'])) {
+			//URL loader
+			$this->load->helper('url');
+
+			if($_SERVER['HTTP_REFERER'] == base_url()."index.php/dashboard/profile/{$_SESSION['employeeId']}") {
+				echo "<p class='success'>Succeessfully Edited Profile!</p>";
+			}
+
+		} 
 		//changet he default timezone to Eastern Time
 		date_default_timezone_set('America/New_York');
 
 		//SQL even though it's bad practice, I'll be changing in a future update
-		$query = $this->db->query("select * from team join employee on employee.employeeId = team.managerId where managerId='{$_SESSION['employeeId']}'");
-
+		$query = $this->db->query("select employee.firstName as fn, employee.lastName as ln, team.managerId as mid, team.employeeId as eid from team join employee on employee.employeeId = team.managerId where managerId='{$_SESSION['employeeId']}' order by eid");
+		$query2 = $this->db->query("select * from employee where employeeId='{$_SESSION['employeeId']}'");
+		$row = $query->row();
+		$row2 = $query2->row();
 		//check if number of rows is greater than 0 (if team exists)
-		if($query->num_rows() > 0) {
+		if($query->num_rows() > 0 or $query2->num_rows > 0) {
+
+			foreach($query->result_array() as $member) {
+				$memberId = $member['eid'];
+				$firstName = $member['fn'];
+				$lastName = $member['ln'];
+			}
+
 			//an array to hold template parsing values
 			$data = array(
 				'user' => $_SESSION['firstName'],
 				'employeeId' => $_SESSION['employeeId'],
 				'datetime' => unix_to_human(time(), TRUE, 'us'),
-				'memberId' => $query->result_array(),
-				'firstName' => $query->result_array(),
-				'lastName' => $query->result_array(),
+				//'memberId' => $row->eid,
+				'memberId' => $memberId,
+				'firstName' => $firstName,
+				'lastName' => $lastName,
+				'attendance' => 'N/A',
+				'surveyScores' => 'N/A',
+				'salesScores' => 'N/A'
 			);
 				
 		} else {
@@ -60,13 +93,19 @@ class Dashboard extends CI_Controller {
 			$data = array(
 				'user' => $_SESSION['firstName'],
 				'employeeId' => $_SESSION['employeeId'],
-				'datetime' => unix_to_human(time(), TRUE, 'us')
+				'datetime' => unix_to_human(time(), TRUE, 'us'),
+				'firstName' => 'N/A',
+				'lastName' => 'N/A',
+				'attendance' => 'N/A',
+				'surveyScores' => 'N/A',
+				'salesScores' => 'N/A'
 			);
 
 			
 		}
 		//parse the templates using the $data arrays above
 		$this->parser->parse('dashboard', $data);
+
 
 			
 			
@@ -98,6 +137,45 @@ class Dashboard extends CI_Controller {
 
 	//Future methods below...
 	public function profile() {
+		//check to see if session isn't set
+		if(!$_SESSION) {
+		//if not, send user to login page (where it is initallized after login)
+		header("Location: ../login");
+		}
+		$this->load->helper('url');
+		$this->load->database();
+		$this->load->helper('html');
+		//$this->load->view('profile');
+		$this->load->library('parser');
+
+		//pieces of segments from the URL
+		$segments = array("dashboard", "profile", $_SESSION['employeeId']);
+		//segment two is the employeeID from the session made by login
+		$id = $segments[2];
+		//display message for which profile you're editing
+		
+		//Query string for pulling users profile data
+		$query = $this->db->query("select * from employee where employeeId='$id'");
+		$row = $query->row();
+
+		$data = array(
+			'employeeId' => $row->employeeId,
+			'firstName' => $row->firstName,
+			'lastName' => $row->lastName,
+			'startDate' => $row->startDate,
+			'manager' => $row->manager,
+			'email' => $row->email,
+			'password' => $row->password,
+			'activationCode' => $row->activationCode,
+			'activatedId' => $row->activatedId
+		);
+
+		$this->parser->parse('profile', $data);
+		
+
+
+
+		//echo "Editing for ".$id;
 
 	}
 
@@ -106,7 +184,7 @@ class Dashboard extends CI_Controller {
 	}
 
 	public function settings() {
-		
+		$this->load->view('settings');
 	}
 
 	public function uploads() {
