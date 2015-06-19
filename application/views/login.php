@@ -159,7 +159,7 @@
 		<img src='../../assets/images/login.png' />
 	</header>
 	<section>
-		
+
 		<?php echo form_open('login/process'); ?>
 		<br />
 		<strong>E-Mail Address:</strong><br />
@@ -169,7 +169,7 @@
 		<?php echo form_submit('login', 'Login'); ?>
 		<?php echo form_close(); ?><br />
 		<br />
-		<p>Register <span class='free'>FREE</span> as <a href='../register/manager'>Manager</a> or <a href='../register/member'>Member</a></p>
+		<p>Register <span class='free'>FREE</span> as <a href='../register/manager'>Manager</a></p>
 
 
 

@@ -251,8 +251,7 @@
 			<img src='../../assets/images/logo.png' />
 		</div>
 		<div id="user-data">
-			<h2>Welcome, {firstName} <a href='profile/{employeeId}'><span class='edit_profile'>Edit Profile</span></a></h2>
-			<h4>{datetime}</h4>
+			<h2>Welcome, <?php echo $_SESSION['firstName']; ?></h2>
 			<a href='logout'><h4 class='logout'>Logout</h4></a>
 		</div>
 	</header>
@@ -260,36 +259,11 @@
 	<nav>
 		<ul>
 			<li><a href='#'>Home</a></li>
-			<li><a href='../create/employee'>Create</a></li>
-			<li><a href='settings/'>Settings</a></li>
-			<li><a href='uploads/'>Uploads</a></li>
 		</ul>
 	</nav>
 <div class="container">
 
-<h3 class='label'>Your Team <img src='../../assets/images/add.png' href='#new_member' class='add' /></h3>
-<table>
-	<thead>
-		<tr>
-			<td>Employee</td>
-			<td>EmployeeID</td>
-			<td>Attendance</td>
-			<td>Survey Scores</td>
-			<td>Sales Scores</td>
-			<td>Options</td>
-		</tr>
-	</thead>
-	<tbody>
-		<tr>
-			<td>{lastName}, {firstName}</td>
-			<td>{memberId}</td>
-			<td>{attendance}</td>
-			<td>{surveyScores}</td>
-			<td>{salesScores}</td>
-			<td><a href='profile/{memberId}'><img src='../../assets/images/gears.png' /></a></td>
-		</tr>
-	</tbody>
-</table>
+
 <div id="new_member">
 
 <form action="../teammember/add" method="POST">

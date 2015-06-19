@@ -14,6 +14,7 @@ class Register extends CI_Controller {
 		$this->form_validation->run();
 	}
 
+	//for managers
 	//process method running database, email library, and registerProcess template
 	public function process() {
 		$this->load->database();
@@ -53,7 +54,7 @@ class Register extends CI_Controller {
 						$this->email->subject('Activate your PigeonHole Account!');
 						$this->email->message('Testing the email class!');
 						if($this->email->send()) {
-							echo "<p>Registered Successfully! Please visit your email to activate your account.</p>";
+							echo "Registered Successfully! Please visit your email to activate your account.";
 						} else {
 							//if didn't work, show debugger info
 							echo $this->email->print_debugger();
@@ -78,6 +79,32 @@ class Register extends CI_Controller {
 		} else {
 			echo "Didn't work";
 		}
+	}
+
+	public function employee() {
+		$this->load->database();
+		if($_POST) {
+
+			$employeeId = $_POST['employeeId'];
+			$email = $_POST['email'];
+			$fname = $_POST['firstName'];
+			$lname = $_POST['lastName'];
+			$startDate = $_POST['startDate'];
+
+			$sql = "insert into employee (employeeId, firstName, lastName, startDate, manager, email) values 
+			('$employeeId', '$fname', '$lname', '$startDate', '2', '$email')";
+
+			$query = $this->db->query($sql);
+			
+
+			
+
+
+		} 
+
+		header("Location: ../create/team");
+
+
 	}
 
 }

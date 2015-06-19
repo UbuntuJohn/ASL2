@@ -2,10 +2,9 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>Dashboard - Pigeonhole</title>
-	<link rel="stylesheet" type="text/css" href="../../assets/js/popup/dist/magnific-popup.css" />
-	<style type="text/css">
+	<title>Register - Pigeonhole</title>
 
+	<style type="text/css">
 
 	::selection{ background-color: #E13300; color: white; }
 	::moz-selection{ background-color: #E13300; color: white; }
@@ -64,8 +63,6 @@
 		color: #fff;
 		font-family: "lev";
 		font-size: 14px;
-
-
 	}
 
 	a {
@@ -76,17 +73,11 @@
 
 	@font-face {
 		font-family: "lev";
-		src: url('../../../assets/fonts/levserif.otf');
+		src: url('../../assets/fonts/levserif.otf');
 	}
 
 	h1, h2, h3, h4 {
-		font-family: "lev" !important;
-	}
-
-	h2 {
-		font-size: 36px;
-		text-align: center;
-		padding-top: 40px;
+		font-family: "lev";
 	}
 
 	.container {
@@ -99,11 +90,11 @@
 	}
 
 	form {
-		margin-top: 70px;
-		margin-left: 100px;
+		margin-top: 30px;
+		margin-left: 90px;
 	}
 
-	input[type=text], input[type=password], input[type=email] {
+	input[type=text], input[type=password] {
 		border: 2px solid #df7619;
 		height: 40px;
 		width: 300px;
@@ -130,97 +121,59 @@
 		font-family: "lev";
 		font-size: 24px;
 		color: #fff;
+		
 	}
 
-	p {
-		text-align: center;
-		font-family: "lev";
-		font-size: 16px;
-		color: #fff;
-		margin-top: 100px;
-		background-color: #38292a;
-		padding: 8px;
-		border: 2px solid #c1c1c1;
-	}
-
-	p a {
-		color: #ead0ae;
-		text-decoration: none;
-		text-shadow: 1px 1px 1px #333;
-	}
-
-	.free {
-		color: #df7619;
-		text-shadow: 1px 1px 1px #333;
+	header img {
+		width: 400px;
+		margin-left: 40px;
 	}
 
 	strong {
 		text-shadow: 1px 1px 1px #333;
-		font-weight: bold;
-		font-size: 18px;
-		letter-spacing: 1.5px;
 	}
 
-	.required {
-		color: red;
-		width: 10px;
-		height: 10px;
-		padding-top: 7px;
-		padding-left: 5px;
-		padding-right: 5px;
-		text-align: center;
-		border-radius: 4px;
-		background-color: white;
+
+	h1 {
+		font-size: 48px;
+		line-height: 90px;
+		color: #df7619;
+		text-shadow: 1px 1px 3px #222;
 	}
 
-	.note {
-		text-align: left;
-	}
 
-	.cancel {
-		position: absolute;
-		top: 0;
-		left: 0;
-		padding: 10px;
-		margin: 10px;
-		background-image: url('../../../assets/images/cancel.png');
-		width: 60px;
-		height: 60px;
-		background-repeat: no-repeat;
-	}
 
-	.cancel:hover {
-		position: absolute;
-		top: 0;
-		left: 0;
-		padding: 10px;
-		margin: 10px;
-		background-image: url('../../../assets/images/cancel_hover.png');
-		width: 60px;
-		height: 60px;
-		background-repeat: no-repeat;
-	}
+	
 	</style>
 </head>
 <body>
-<a href="../../cancel/go"><div class="cancel"></div></a>
-<div class="container">
-<h2>Editing for employee: {employeeId}</h2>
-<form action='../../profile/process' method='POST'>
-<input type="hidden" value="{employeeId}" name="employeeId" />
-<strong>E-Mail Address:<br />
-<input type="email" value="{email}" name="email" required/> <span class='required'>*</span><br /><br />
-<strong>First Name:<br />
-<input type="text" value="{firstName}" name="firstName" disabled required/> <span class='required'>*</span><br /><br />
-<strong>Last Name:<br />
-<input type="text" value="{lastName}" name="lastName" required/> <span class='required'>*</span><br /><br />
-<strong>Start Date:<br />
-<input type="text" value="{startDate}" name="startDate" disabled required/> <span class='required'>*</span><br /><br />
-<strong>Password: (optional)<br />
-<input type="password" value="" name="password" /><br /><br />
-<input type='submit' value='Update' />
-</form>
 
+<div class="container">
+	<header>
+
+	</header>
+	<section>
+		
+		<h1>Create an Employee</h1>
+		<?php echo form_open('register/employee'); ?>
+		<br />
+		<strong>Employee ID:</strong><br />
+		<?php echo form_input('employeeId', ''); ?><br /><br />
+		<strong>Start Date:</strong><br />
+		<?php echo form_input('startDate', date('Y-m-d')); ?><br /><br />
+		<strong>E-Mail Address:</strong><br />
+		<?php echo form_input('email', ''); ?><br /><br />
+		<strong>First Name:</strong><br />
+		<?php echo form_input('firstName', ''); ?><br /><br />
+		<strong>Last Name:</strong><br />
+		<?php echo form_input('lastName', ''); ?><br /><br />
+		<?php echo form_submit('register', 'Register'); ?>
+		<?php echo form_close(); ?>
+
+
+
+	</section>
 </div>
+
 </body>
 </html>

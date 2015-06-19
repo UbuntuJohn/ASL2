@@ -44,13 +44,26 @@ class Login extends CI_Controller {
 					//create a session for each value shown
 					$_SESSION['firstName'] = $row->firstName;
 					$_SESSION['employeeId'] = $row->employeeId;
+					//do checks throughout site if this is 1
+					$_SESSION['manager'] = $row->manager;
 
 					//a good point here would be to store that database stuff in the array
 					$array = [
 						
 					];
+
+
+					//do check if manager has team members
+					$query2 = $this->db->query("select * from team where managerId='{$_SESSION['employeeId']}'");
+
+					if($query2->num_rows() < 1) {
+						header("Location: ../createTeam/");
+					} else {
+						header("Location: ../dashboard/");
+					}
+
 					//send user to dashboard
-					header("Location: ../dashboard/");
+					
 					
 
 				} else {

@@ -61,7 +61,11 @@ class Dashboard extends CI_Controller {
 		date_default_timezone_set('America/New_York');
 
 		//SQL even though it's bad practice, I'll be changing in a future update
-		$query = $this->db->query("select employee.firstName as fn, employee.lastName as ln, team.managerId as mid, team.employeeId as eid from team join employee on employee.employeeId = team.managerId where managerId='{$_SESSION['employeeId']}' order by eid");
+		//$query = $this->db->query("select employee.firstName as fn, employee.lastName as ln, team.managerId as mid, team.employeeId as eid from team join employee on employee.employeeId = team.managerId where managerId='{$_SESSION['employeeId']}' order by eid");
+		
+		$query = $this->db->query("select employee.employeeId as rid, employee.firstName as fn, employee.lastName as ln, 
+team.managerId as mid, team.employeeId as eid from team 
+join employee on employee.employeeId = team.managerId");
 		$query2 = $this->db->query("select * from employee where employeeId='{$_SESSION['employeeId']}'");
 		$row = $query->row();
 		$row2 = $query2->row();
@@ -69,9 +73,9 @@ class Dashboard extends CI_Controller {
 		if($query->num_rows() > 0 or $query2->num_rows > 0) {
 
 			foreach($query->result_array() as $member) {
-				$memberId = $member['eid'];
-				$firstName = $member['fn'];
-				$lastName = $member['ln'];
+				$memberId[] = $member['eid'];
+				$fn = $member['fn'];
+				$ln = $member['ln'];
 			}
 
 			//an array to hold template parsing values
@@ -81,8 +85,8 @@ class Dashboard extends CI_Controller {
 				'datetime' => unix_to_human(time(), TRUE, 'us'),
 				//'memberId' => $row->eid,
 				'memberId' => $memberId,
-				'firstName' => $firstName,
-				'lastName' => $lastName,
+				'firstName' => $fn,
+				'lastName' => $ln,
 				'attendance' => 'N/A',
 				'surveyScores' => 'N/A',
 				'salesScores' => 'N/A'
@@ -122,6 +126,11 @@ class Dashboard extends CI_Controller {
 			$base_url = base_url()."index.php/dashboard/";
 			header("Location: {$base_url}");
 		}
+
+		//removes all session variables
+		session_unset();
+		//destroy the session
+		session_destroy();
 	}
 
 	//logout method showing the logout template and allowing for javascript to run
@@ -129,6 +138,7 @@ class Dashboard extends CI_Controller {
 	public function logout() {
 		$this->load->view('logout');
 		$this->load->library('javascript');
+
 		//removes all session variables
 		session_unset();
 		//destroy the session
@@ -158,6 +168,8 @@ class Dashboard extends CI_Controller {
 		$query = $this->db->query("select * from employee where employeeId='$id'");
 		$row = $query->row();
 
+		
+
 		$data = array(
 			'employeeId' => $row->employeeId,
 			'firstName' => $row->firstName,
@@ -177,10 +189,6 @@ class Dashboard extends CI_Controller {
 
 		//echo "Editing for ".$id;
 
-	}
-
-	public function termed() {
-		
 	}
 
 	public function settings() {
