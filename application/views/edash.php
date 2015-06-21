@@ -251,7 +251,7 @@
 			<img src='../../assets/images/logo.png' />
 		</div>
 		<div id="user-data">
-			<h2>Welcome, <?php echo $_SESSION['firstName']; ?></h2>
+			<h2>Welcome, <?php echo $_SESSION['efirstName']; ?></h2>
 			<a href='logout'><h4 class='logout'>Logout</h4></a>
 		</div>
 	</header>

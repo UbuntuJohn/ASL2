@@ -31,9 +31,9 @@ class employees extends CI_Controller {
 				foreach($query->result() as $row) {
 					session_start();
 					$_SESSION['accType'] = $row->manager;
-					$_SESSION['employeeId'] = $row->employeeId;
-					$_SESSION['firstName'] = $row->firstName;
-					$_SESSION['lastName'] = $row->lastName;
+					$_SESSION['eemployeeId'] = $row->employeeId;
+					$_SESSION['efirstName'] = $row->firstName;
+					$_SESSION['elastName'] = $row->lastName;
 
 					header("Location: ../employees/dashboard");
 				}

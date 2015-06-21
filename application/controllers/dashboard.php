@@ -81,32 +81,18 @@ join employee on employee.employeeId = team.managerId");
 			//an array to hold template parsing values
 			$data = array(
 				'user' => $_SESSION['firstName'],
-				'employeeId' => $_SESSION['employeeId'],
+				'employeeId' => $row2->employeeId,
 				'datetime' => unix_to_human(time(), TRUE, 'us'),
 				//'memberId' => $row->eid,
-				'memberId' => $memberId,
-				'firstName' => $fn,
+				'memberId' => $memberId[1],
+				'firstName' => $_SESSION['firstName'],
 				'lastName' => $ln,
 				'attendance' => 'N/A',
 				'surveyScores' => 'N/A',
 				'salesScores' => 'N/A'
 			);
 				
-		} else {
-			//same as above, but if team doesn't exist
-			$data = array(
-				'user' => $_SESSION['firstName'],
-				'employeeId' => $_SESSION['employeeId'],
-				'datetime' => unix_to_human(time(), TRUE, 'us'),
-				'firstName' => 'N/A',
-				'lastName' => 'N/A',
-				'attendance' => 'N/A',
-				'surveyScores' => 'N/A',
-				'salesScores' => 'N/A'
-			);
-
-			
-		}
+		} 
 		//parse the templates using the $data arrays above
 		$this->parser->parse('dashboard', $data);
 
@@ -127,10 +113,6 @@ join employee on employee.employeeId = team.managerId");
 			header("Location: {$base_url}");
 		}
 
-		//removes all session variables
-		session_unset();
-		//destroy the session
-		session_destroy();
 	}
 
 	//logout method showing the logout template and allowing for javascript to run
