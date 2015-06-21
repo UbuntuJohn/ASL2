@@ -80,20 +80,22 @@ class Register extends CI_Controller {
 			echo "Didn't work";
 		}
 	}
-
+	//register employee page
 	public function employee() {
+		//load database
 		$this->load->database();
+		//check if data has been posted at all
 		if($_POST) {
-
+			//setting variables to those post values
 			$employeeId = $_POST['employeeId'];
 			$email = $_POST['email'];
 			$fname = $_POST['firstName'];
 			$lname = $_POST['lastName'];
 			$startDate = $_POST['startDate'];
-
+			//sql to insert that data into employee table
 			$sql = "insert into employee (employeeId, firstName, lastName, startDate, manager, email) values 
 			('$employeeId', '$fname', '$lname', '$startDate', '2', '$email')";
-
+			//run the query
 			$query = $this->db->query($sql);
 			
 
@@ -101,7 +103,7 @@ class Register extends CI_Controller {
 
 
 		} 
-
+		//send them to create team page
 		header("Location: ../create/team");
 
 
