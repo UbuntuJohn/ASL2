@@ -64,8 +64,9 @@ class Dashboard extends CI_Controller {
 		//$query = $this->db->query("select employee.firstName as fn, employee.lastName as ln, team.managerId as mid, team.employeeId as eid from team join employee on employee.employeeId = team.managerId where managerId='{$_SESSION['employeeId']}' order by eid");
 		
 		$query = $this->db->query("select employee.employeeId as rid, employee.firstName as fn, employee.lastName as ln, 
-team.managerId as mid, team.employeeId as eid from team 
-join employee on employee.employeeId = team.managerId");
+		team.managerId as mid, team.employeeId as eid from team 
+		join employee on employee.employeeId = team.managerId");
+
 		$query2 = $this->db->query("select * from employee where employeeId='{$_SESSION['employeeId']}'");
 		$row = $query->row();
 		$row2 = $query2->row();
@@ -83,8 +84,8 @@ join employee on employee.employeeId = team.managerId");
 				'user' => $_SESSION['firstName'],
 				'employeeId' => $row2->employeeId,
 				'datetime' => unix_to_human(time(), TRUE, 'us'),
-				//'memberId' => $row->eid,
-				'memberId' => $memberId[1],
+				'memberId' => $row->eid,
+				//'memberId' => $memberId[1],
 				'firstName' => $_SESSION['firstName'],
 				'lastName' => $ln,
 				'attendance' => 'N/A',
