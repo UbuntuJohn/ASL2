@@ -50,9 +50,38 @@ class employees extends CI_Controller {
 	public function dashboard() {
 		session_start();
 		$this->load->helper('html');
-		echo link_tag('/assets/css/dashboard.css');
+		$this->load->library('parser');
+		$this->load->database();
+		echo link_tag('/assets/css/edash.css');
 		$this->load->view('edash_header');
 		$this->load->view('edash_nav');
+		$this->load->view('edash_container');
+		$this->load->view('edash_attendance');
+
+		$eemployeeId = $_SESSION['eemployeeId'];
+
+		$sql = "select date, attendanceName, description from attendance 
+		join attendanceCodes on attendanceCodes.attendanceId = attendance.attendanceCode
+		where employeeId='$eemployeeId'";
+		$query = $this->db->query($sql);
+		foreach($query->result_array() as $row) {
+
+			$data = [
+				'date' => $row['date'],
+				'label' => $row['attendanceName'],
+				'description' => $row['description']
+			];
+
+			$this->parser->parse('edash_attendance_data', $data);
+
+		}
+
+		
+		$this->load->view('edash_sales');
+		$this->load->view('edash_sales_data');
+		$this->load->view('edash_surveys');
+		$this->load->view('edash_surveys_data');
+		$this->load->view('edash_footer');
 
 
 		if(!$_SESSION) {
