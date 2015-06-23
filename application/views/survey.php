@@ -103,7 +103,7 @@
 		margin-left: 100px;
 	}
 
-	input[type=text], input[type=password], input[type=email] {
+	input[type=text], input[type=password], input[type=email], input[type=date], select {
 		border: 2px solid #df7619;
 		height: 40px;
 		width: 300px;
@@ -112,6 +112,14 @@
 		color: #806666;
 		padding-left: 10px;
 
+	}
+
+	textarea {
+		border: 2px solid #df7619;
+		font-family: "lev";
+		font-size: 22px;
+		color: #806666;
+		padding-left: 10px;
 	}
 
 	input[type=submit] {
@@ -205,19 +213,14 @@
 <body>
 <a href="../../cancel/go"><div class="cancel"></div></a>
 <div class="container">
-<h2>Editing for employee: {firstName} {lastName}</h2>
-<form action='../../profile/process' method='POST'>
+<h2>Editing survey for employee: {firstName} {lastName}</h2>
+<form action='../../surveys/process' method='POST'>
 <input type="hidden" value="{employeeId}" name="employeeId" />
-<strong>E-Mail Address:<br />
-<input type="email" value="{email}" name="email" required/> <span class='required'>*</span><br /><br />
-<strong>First Name:<br />
-<input type="text" value="{firstName}" name="firstName" disabled required/> <span class='required'>*</span><br /><br />
-<strong>Last Name:<br />
-<input type="text" value="{lastName}" name="lastName" required/> <span class='required'>*</span><br /><br />
-<strong>Start Date:<br />
-<input type="text" value="{startDate}" name="startDate" disabled required/> <span class='required'>*</span><br /><br />
-<strong>Password: (optional)<br />
-<input type="password" value="" name="password" /><br /><br />
+<strong>Date:<br />
+<input type="date" value="{date}" name="date" required/> <span class='required'>*</span><br /><br />
+<strong>Score:<br />
+<input type="text" name="score" placeholder="3.5" required/>
+<span class='required'>*</span><br /><br />
 <input type='submit' value='Update' />
 </form>
 

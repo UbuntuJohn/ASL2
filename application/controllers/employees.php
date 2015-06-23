@@ -49,7 +49,11 @@ class employees extends CI_Controller {
 
 	public function dashboard() {
 		session_start();
-		$this->load->view('edash');
+		$this->load->helper('html');
+		echo link_tag('/assets/css/dashboard.css');
+		$this->load->view('edash_header');
+		$this->load->view('edash_nav');
+
 
 		if(!$_SESSION) {
 			header("Location: login");

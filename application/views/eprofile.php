@@ -207,7 +207,7 @@
 <body>
 <a href="../../cancel/go"><div class="cancel"></div></a>
 <div class="container">
-<h2>Editing for employee: {employeeId}</h2>
+<h2>Editing for employee: {firstName} {lastName}</h2>
 <form action='../../profile/process' method='POST'>
 <input type="hidden" value="{employeeId}" name="employeeId" />
 <strong>E-Mail Address:<br />

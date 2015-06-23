@@ -213,7 +213,7 @@
 <body>
 <a href="../../cancel/go"><div class="cancel"></div></a>
 <div class="container">
-<h2>Editing attendance for employee: {employeeId}</h2>
+<h2>Editing attendance for employee: {firstName} {lastName}</h2>
 <form action='../../attendance/process' method='POST'>
 <input type="hidden" value="{employeeId}" name="employeeId" />
 <strong>Date:<br />
