@@ -1,26 +1,10 @@
 <?php 
 session_start();
 
-
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Dashboard extends CI_Controller {
 
-	/**
-	 * Index Page for this controller.
-	 *
-	 * Maps to the following URL
-	 * 		http://example.com/index.php/welcome
-	 *	- or -  
-	 * 		http://example.com/index.php/welcome/index
-	 *	- or -
-	 * Since this controller is set as the default controller in 
-	 * config/routes.php, it's displayed at http://example.com/
-	 *
-	 * So any other public methods not prefixed with an underscore will
-	 * map to /index.php/welcome/<method_name>
-	 * @see http://codeigniter.com/user_guide/general/urls.html
-	 */
 	public function index()
 	{
 
@@ -30,8 +14,6 @@ class Dashboard extends CI_Controller {
 			//if not, send user to login page (where it is initallized after login)
 			header("Location: login");
 		}
-
-		//if($_SERVER['HTTP_REFERER'] == base_url().)
 
 
 		//load the data helper
@@ -45,8 +27,12 @@ class Dashboard extends CI_Controller {
 		$this->load->database();
 
 		$this->load->helper('html');
+
+
+
 		//URL loader
 		$this->load->helper('url');
+		//$this->template->add_css('dashboard');
 		
 		if(isset($_SERVER['HTTP_REFERER'])) {
 			//URL loader
@@ -59,44 +45,38 @@ class Dashboard extends CI_Controller {
 		} 
 		//changet he default timezone to Eastern Time
 		date_default_timezone_set('America/New_York');
-
-		//SQL even though it's bad practice, I'll be changing in a future update
-		//$query = $this->db->query("select employee.firstName as fn, employee.lastName as ln, team.managerId as mid, team.employeeId as eid from team join employee on employee.employeeId = team.managerId where managerId='{$_SESSION['employeeId']}' order by eid");
 		
-		$query = $this->db->query("select employee.employeeId as rid, employee.firstName as fn, employee.lastName as ln, 
-		team.managerId as mid, team.employeeId as eid from team 
-		join employee on employee.employeeId = team.managerId");
+		$session_employeeId = $_SESSION['employeeId'];
 
-		$query2 = $this->db->query("select * from employee where employeeId='{$_SESSION['employeeId']}'");
-		$row = $query->row();
-		$row2 = $query2->row();
-		//check if number of rows is greater than 0 (if team exists)
-		if($query->num_rows() > 0 or $query2->num_rows > 0) {
+		$sql = "select firstName, lastName, team.employeeId from employee
+		join team on team.employeeId = employee.employeeId where team.managerId = '{$session_employeeId}'";
 
-			foreach($query->result_array() as $member) {
-				$memberId[] = $member['eid'];
-				$fn = $member['fn'];
-				$ln = $member['ln'];
-			}
+		$query = $this->db->query($sql);
 
-			//an array to hold template parsing values
-			$data = array(
-				'user' => $_SESSION['firstName'],
-				'employeeId' => $row2->employeeId,
-				'datetime' => unix_to_human(time(), TRUE, 'us'),
-				'memberId' => $row->eid,
-				//'memberId' => $memberId[1],
-				'firstName' => $_SESSION['firstName'],
-				'lastName' => $ln,
-				'attendance' => 'N/A',
-				'surveyScores' => 'N/A',
-				'salesScores' => 'N/A'
-			);
-				
-		} 
+		$this->load->view('ph_header');
+		echo link_tag('/assets/css/dashboard.css');
+		$this->load->view('ph_nav');
+		$this->load->view('ph_addteam');
+
+
+		foreach ($query->result_array() as $row) {
+
+			$data = [
+
+				'firstName' => $row['firstName'],
+				'lastName' => $row['lastName'],
+				'employeeId' => $row['employeeId']
+
+			];
+
+			$this->parser->parse('ph_table', $data);
+
+
+		}
+
 		//parse the templates using the $data arrays above
-		$this->parser->parse('dashboard', $data);
-
+		$this->load->view('ph_tablefooter');
+		$this->load->view('ph_footer');
 
 			
 			
@@ -174,7 +154,57 @@ class Dashboard extends CI_Controller {
 
 	}
 
+	public function eprofile() {
+		//check to see if session isn't set
+		if(!$_SESSION) {
+		//if not, send user to login page (where it is initallized after login)
+		header("Location: ../login");
+		}
+		$this->load->helper('url');
+		$this->load->database();
+		$this->load->helper('html');
+		//$this->load->view('profile');
+		$this->load->library('parser');
+
+		$eid = $this->uri->segment(3, 'leading');
+
+		//pieces of segments from the URL
+		$segments = array("dashboard", "eprofile", $eid);
+		//segment two is the employeeID from the session made by login
+		$id = $segments[2];
+		//display message for which profile you're editing
+		
+		//Query string for pulling users profile data
+		$query = $this->db->query("select * from employee where employeeId='$id'");
+		$row = $query->row();
+
+		
+
+		$data = array(
+			'employeeId' => $row->employeeId,
+			'firstName' => $row->firstName,
+			'lastName' => $row->lastName,
+			'startDate' => $row->startDate,
+			'manager' => $row->manager,
+			'email' => $row->email,
+			'password' => $row->password,
+			'activationCode' => $row->activationCode,
+			'activatedId' => $row->activatedId
+		);
+
+		$this->parser->parse('eprofile', $data);
+		
+
+
+
+		//echo "Editing for ".$id;
+
+	}
+
 	public function settings() {
+		$this->load->helper('html');
+		echo link_tag('/assets/css/dashboard.css');
+		$this->load->view('ph_header');
 		$this->load->view('settings');
 	}
 
