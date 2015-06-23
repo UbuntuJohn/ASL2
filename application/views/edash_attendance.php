@@ -1,5 +1,5 @@
 	<table>
 		<tr class="header">
-			<th>Attendance -</th>
+			<th colspan="3">Attendance</th>
 		</tr>
 

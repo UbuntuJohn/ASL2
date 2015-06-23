@@ -62,7 +62,7 @@ class employees extends CI_Controller {
 
 		$sql = "select date, attendanceName, description from attendance 
 		join attendanceCodes on attendanceCodes.attendanceId = attendance.attendanceCode
-		where employeeId='$eemployeeId' order by attendance.attendanceId desc limit 5";
+		where employeeId='$eemployeeId' order by date desc limit 5";
 		$query = $this->db->query($sql);
 		foreach($query->result_array() as $row) {
 
@@ -79,7 +79,7 @@ class employees extends CI_Controller {
 		
 		$this->load->view('edash_sales');
 
-		$sql2 = "select date, score, description from salesScores where employeeId='$eemployeeId' limit 5";
+		$sql2 = "select date, score, description from salesScores where employeeId='$eemployeeId' order by date desc limit 5";
 		$query2 = $this->db->query($sql2);
 
 		foreach($query2->result_array() as $row) {
@@ -96,7 +96,7 @@ class employees extends CI_Controller {
 		
 		$this->load->view('edash_surveys');
 
-		$sql3 = "select surveyDate, score from survey where employeeId='$eemployeeId' limit 5";
+		$sql3 = "select surveyDate, score from survey where employeeId='$eemployeeId' order by surveyDate desc limit 5";
 		$query3 = $this->db->query($sql3);
 
 		foreach($query3->result_array() as $row) {

@@ -1,3 +1,3 @@
 <tr class="header">
-	<th>Surveys -</th>
+	<th colspan="3">Surveys</th>
 </tr>
