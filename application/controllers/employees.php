@@ -62,7 +62,7 @@ class employees extends CI_Controller {
 
 		$sql = "select date, attendanceName, description from attendance 
 		join attendanceCodes on attendanceCodes.attendanceId = attendance.attendanceCode
-		where employeeId='$eemployeeId'";
+		where employeeId='$eemployeeId' order by attendance.attendanceId desc limit 5";
 		$query = $this->db->query($sql);
 		foreach($query->result_array() as $row) {
 
@@ -78,9 +78,38 @@ class employees extends CI_Controller {
 
 		
 		$this->load->view('edash_sales');
-		$this->load->view('edash_sales_data');
+
+		$sql2 = "select date, score, description from salesScores where employeeId='$eemployeeId' limit 5";
+		$query2 = $this->db->query($sql2);
+
+		foreach($query2->result_array() as $row) {
+
+			$data = [
+				'date' => $row['date'],
+				'score' => $row['score'],
+				'description' => $row['description']
+			];
+
+			$this->parser->parse('edash_sales_data', $data);
+		}
+
+		
 		$this->load->view('edash_surveys');
-		$this->load->view('edash_surveys_data');
+
+		$sql3 = "select surveyDate, score from survey where employeeId='$eemployeeId' limit 5";
+		$query3 = $this->db->query($sql3);
+
+		foreach($query3->result_array() as $row) {
+
+			$data = [
+				'score' => $row['score'],
+				'date' => $row['surveyDate']
+			];
+
+			$this->parser->parse('edash_surveys_data', $data);
+		}
+
+		
 		$this->load->view('edash_footer');
 
 
