@@ -28,7 +28,9 @@ class Dashboard extends CI_Controller {
 
 		$this->load->helper('html');
 
+		$this->load->library('pagination');
 
+		
 
 		//URL loader
 		$this->load->helper('url');
@@ -75,6 +77,9 @@ class Dashboard extends CI_Controller {
 		}
 
 		//parse the templates using the $data arrays above
+
+		
+
 		$this->load->view('ph_tablefooter');
 		$this->load->view('ph_footer');
 
